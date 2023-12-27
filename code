@@ -1,0 +1,44 @@
+Pipeline {
+  agent any 
+  Stage ('one') {
+Steps {
+  Echo 'hi this is tarun '
+  }
+}
+Stage ('two') {
+Steps{
+  input ('Do you want to proceed')
+  }
+  }
+Stage ('three')
+{
+ when {
+   not{
+   branch "main"
+   }
+}
+}
+Steps {
+  echo "hello"
+  }
+  }
+Stage('four') {
+parallel {
+  Stage ('unit test'){
+  Steps {
+    echo "Running unit testing"
+    }
+}
+Stage('Integration test'){
+agent {
+  docker {
+  reusNode false 
+  image'Ubuntu'
+  }
+}
+Steps {
+  echo 'Running the intergration testing'
+  }
+  }
+  }
+  }}}}
