@@ -1,44 +1,47 @@
-Pipeline {
-  agent any 
-  Stage ('one') {
-Steps {
-  echo 'hi this is tarun '
-  }
-}
-Stage ('two') {
-Steps{
-  input ('Do you want to proceed')
-  }
-  }
-Stage ('three')
-{
- when {
-   not{
-   branch "main"
-   }
-}
-}
-Steps {
-  echo "hello"
-  }
-  }
-Stage('four') {
-parallel {
-  Stage ('unit test'){
-  Steps {
-    echo "Running unit testing"
+pipeline {
+    agent any
+    stages {
+        stage('One') {
+                steps {
+                        echo 'Hi, this is Zulaikha from edureka'
+			
+                }
+        }
+	    stage('Two'){
+		    
+		steps {
+			input('Do you want to proceed?')
+        }
+	    }
+        stage('Three') {
+                when {
+                        not {
+                                branch "master"
+                        }
+                }
+                steps {
+			echo "Hello"
+                        }
+        }
+        stage('Four') {
+                parallel {
+                        stage('Unit Test') {
+                                steps{
+                                        echo "Running the unit test..."
+                                }
+                        }
+                        stage('Integration test') {
+                        agent {
+                                docker {
+                                        reuseNode false
+					image 'ubuntu'
+                                        }
+			}
+				steps {
+					echo 'Running the integration test..'
+				}
+                               
+			}  }
+        }
     }
 }
-Stage('Integration test'){
-agent {
-  docker {
-  reusNode false 
-  image'Ubuntu'
-  }
-}
-Steps {
-  echo 'Running the intergration testing'
-  }
-  }
-  }
-  }}}}
