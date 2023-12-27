@@ -2,7 +2,7 @@ Pipeline {
   agent any 
   Stage ('one') {
 Steps {
-  Echo 'hi this is tarun '
+  echo 'hi this is tarun '
   }
 }
 Stage ('two') {
